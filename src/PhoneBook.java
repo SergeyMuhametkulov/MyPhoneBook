@@ -220,6 +220,108 @@ public class PhoneBook {
         }
 
     }
+    public static List<User> updateUser(List<User> users){
+        Scanner scanner = new Scanner(System.in);
+        String name = "";
+        String surName ="";
+        boolean updateByNumber = false;
+        boolean updateByName = false;
+        boolean noContact = true;
+        int userNumber = 0;
+        int res;
+        while (true){
+            try {
+                System.out.println("""
+                        Кого будете изменять?
+                        1 - найти по номеру
+                        2 - найти по имени и фамилии
+                        3 - назад""");
+                res = scanner.nextInt();
+                break;
+
+            }catch (Exception e){
+                System.out.println("неверный ввод");
+                scanner = new Scanner(System.in);
+            }
+        }
+        while (true){
+            if (res==1){
+                try {
+                    System.out.print("Введите номер : +");
+                    userNumber = scanner.nextInt();
+                    updateByNumber = true;
+                    break;
+
+                }catch (Exception e){
+                    System.out.println("проверте номер");
+                    scanner = new Scanner(System.in);
+                }
+            } else if (res==3) {
+                Menu.start(users);
+            } else if (res==2) {
+                scanner = new Scanner(System.in);
+                System.out.println("Введите имя");
+                name = scanner.nextLine();
+                System.out.println("Введите фамилию");
+                surName = scanner.nextLine();
+                updateByName = true;
+                break;
+
+
+            } else {
+                System.out.println("нет такого пункта!!!");
+                System.out.println();
+                findUser(users);
+            }
+        }
+        if (updateByNumber){
+            for (User u:users
+            ) {
+                if(u.getNumber()==userNumber){
+                    System.out.println(u.getName()+" "+ u.getSurname());
+                    scanner = new Scanner(System.in);
+                    System.out.print("Введите новое имя: ");
+                    name = scanner.nextLine();
+                    System.out.println("Введите новую фамилию: ");
+                    surName = scanner.nextLine();
+                    u.setName(name);
+                    u.setSurname(surName);
+                    System.out.println("контакт изменен");
+                    System.out.println();
+                    noContact = false;
+                }
+            }
+        }
+        if (updateByName){
+            for (User u:users
+            ) {
+                if (u.getName().equals(name) && u.getSurname().equals(surName)){
+                    System.out.println("номер : +" + u.getNumber());
+                    while (true){
+                        try {
+                            System.out.print("Введите новый номер: ");
+                            userNumber = scanner.nextInt();
+                            u.setNumber(userNumber);
+                            System.out.println("номер изменен");
+                            break;
+                        }catch (Exception e){
+                            System.out.println("неправильно введен номер");
+                        }
+                    }
+                    noContact = false;
+                }
+            }
+        }
+        if (noContact){
+            System.out.println("нет такого номера");
+            System.out.println();
+            findUser(users);
+
+
+        }return users;
+
+    }
+
     public static void saveUsers(List<User> users) throws IOException {
        FileOutputStream fos = new FileOutputStream("users.bin");
         ObjectOutputStream oos = new ObjectOutputStream(fos);

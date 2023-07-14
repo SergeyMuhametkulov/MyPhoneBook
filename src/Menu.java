@@ -15,6 +15,7 @@ public class Menu {
                 1 - добавить контакт
                 2 - удалить контакт
                 3 - найти контакт
+                4 - изменить контакт
                 5 - сохранить список
                 6 - показать весь список
                 7 - выйти""");
@@ -30,6 +31,8 @@ public class Menu {
                       users = PhoneBook.deleteUser(users);
                 } else if (res==3) {
                     PhoneBook.findUser(users);
+                } else if (res==4) {
+                  users =  PhoneBook.updateUser(users);
                 } else if (res==5) {
                     PhoneBook.saveUsers(users);
                 } else if (res==6) {
