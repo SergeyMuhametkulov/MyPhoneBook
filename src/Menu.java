@@ -16,7 +16,8 @@ public class Menu {
                 2 - удалить контакт
                 3 - найти контакт
                 5 - сохранить список
-                6 - показать весь список""");
+                6 - показать весь список
+                7 - выйти""");
             try {
                 res = scanner.nextInt();
                 if (res==1){
@@ -33,6 +34,10 @@ public class Menu {
                     PhoneBook.saveUsers(users);
                 } else if (res==6) {
                     PhoneBook.printAllUsers(users);
+                } else if (res==7) {
+                    System.out.println("Досвидания");
+                    break;
+
                 } else {
                     System.out.println("нет такого пункта");
                     System.out.println();
